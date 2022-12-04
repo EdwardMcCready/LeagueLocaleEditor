@@ -13,5 +13,14 @@ namespace LeagueLocalEditor
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            MainWindow mainWindow = new MainWindow();
+            ViewModels.MainWindowViewModel mainWindowViewModel = new ViewModels.MainWindowViewModel();
+            mainWindow.DataContext = mainWindowViewModel;
+            mainWindow.Show();
+        }
     }
 }
