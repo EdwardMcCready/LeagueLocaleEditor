@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace LeagueLocalEditor.Converters
+namespace LeagueLocalEditor.UI.Converters
 {
     public class CodeToLanguageConverter : System.Windows.Data.IValueConverter
     {

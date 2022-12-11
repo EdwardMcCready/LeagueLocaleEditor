@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LeagueLocalEditor.Import
+namespace LeagueLocalEditor.UI.Import
 {
     public static class ClientSettingsHelper
     {

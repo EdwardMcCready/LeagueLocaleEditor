@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LeagueLocalEditor.ViewModels
+namespace LeagueLocalEditor.UI.ViewModels
 {
     public class MainWindowViewModel
     {
