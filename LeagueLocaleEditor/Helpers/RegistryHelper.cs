@@ -12,6 +12,7 @@ namespace LeagueLocaleEditor.Helpers
         // not const as it can't be done at compile time
         private const string FullRegistrypath = SoftwareKeyName + "\\" + AppKeyName;
 
+
         public static void CreateRegistryKey(string filePath)
         {
             var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(SoftwareKeyName, true);

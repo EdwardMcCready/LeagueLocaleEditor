@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LeagueLocaleEditor.Import
 {
-    public static class ClientSettingsSeralization
+    public static class ClientSettingsHelpers
     {
         // we only care about the locale so we don't bother with seralizing the entire file to an object
         private const string localeHeader = "locale:";
@@ -61,6 +61,7 @@ namespace LeagueLocaleEditor.Import
         {
             string filePath = string.Empty;
 
+            //var key = string.Empty;
             var key = Helpers.RegistryHelper.ReadRegistryKey();
 
             if (!string.IsNullOrEmpty(key))
