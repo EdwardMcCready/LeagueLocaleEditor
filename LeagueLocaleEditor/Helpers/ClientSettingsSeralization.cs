@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace LeagueLocalEditor.Import
+namespace LeagueLocaleEditor.Import
 {
     public static class ClientSettingsSeralization
     {
@@ -14,15 +14,9 @@ namespace LeagueLocalEditor.Import
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(filePath))
-                {
-                    // Figure out if not given
-                    filePath = GetFileLocation();
-                }
-
                 if (File.Exists(filePath))
                 {
-                    
+                    Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"SOFTWARE\OurSettings");
                     var localeLine = DesersalizeClientSettings(filePath);
 
                     if (!string.IsNullOrWhiteSpace(localeLine))
@@ -49,7 +43,7 @@ namespace LeagueLocalEditor.Import
         private static string DesersalizeClientSettings(string filePath)
         {
             // only gets the locale line
-            using (System.IO.StreamReader reader = new System.IO.StreamReader(filePath))
+            using (StreamReader reader = new StreamReader(filePath))
             {
                 string line;
                 while ((line = reader.ReadLine()) != null)
@@ -63,7 +57,27 @@ namespace LeagueLocalEditor.Import
             }
         }
 
-        private static string GetFileLocation()
+        public static string GetFileLocation()
+        {
+            string filePath = string.Empty;
+
+            var key = Helpers.RegistryHelper.ReadRegistryKey();
+
+            if (!string.IsNullOrEmpty(key))
+            {
+                filePath = key;
+            }
+            else if (string.IsNullOrWhiteSpace(filePath))
+            {
+                // Figure out if not given
+                filePath = LocateFile();
+                Helpers.RegistryHelper.CreateRegistryKey(filePath);
+            }
+
+            return filePath;
+        }
+
+        private static string LocateFile()
         {
             var enumerationOptions = new EnumerationOptions
             {
@@ -71,11 +85,11 @@ namespace LeagueLocalEditor.Import
                 RecurseSubdirectories = true
             };
 
-            foreach (var drive in System.IO.DriveInfo.GetDrives())
+            foreach (var drive in DriveInfo.GetDrives())
             {
                 if (drive.IsReady)
                 {
-                    var files = System.IO.Directory.GetDirectories(drive.RootDirectory.FullName,
+                    var files = Directory.GetDirectories(drive.RootDirectory.FullName,
                         "League of Legends",
                         enumerationOptions);
 

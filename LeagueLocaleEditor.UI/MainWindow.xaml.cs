@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace LeagueLocalEditor.UI
+namespace LeagueLocaleEditor.UI
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

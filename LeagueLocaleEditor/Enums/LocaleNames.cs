@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
 
-namespace LeagueLocalEditor.Enums
+namespace LeagueLocaleEditor.Enums
 {
     public class LocaleNames
     {
@@ -90,13 +90,16 @@ namespace LeagueLocalEditor.Enums
             var languages = new List<Tuple<string, Language>>();
             foreach (var language in Enum.GetValues(typeof(Language)) as IEnumerable<Language>)
             {
-                if (HasDisplayName(language))
+                if (language != Language.invalidCode)
                 {
-                    languages.Add(new Tuple<string, Language>(GetDisplayName(language), language));
-                }
-                else
-                {
-                    languages.Add(new Tuple<string, Language>(language.ToString(), language));
+                    if (HasDisplayName(language))
+                    {
+                        languages.Add(new Tuple<string, Language>(GetDisplayName(language), language));
+                    }
+                    else
+                    {
+                        languages.Add(new Tuple<string, Language>(language.ToString(), language));
+                    }
                 }
             }
             return languages;

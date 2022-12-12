@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 
-namespace LeagueLocalEditor.UI
+namespace LeagueLocaleEditor.UI
 {
     public class Command : ICommand
     {
