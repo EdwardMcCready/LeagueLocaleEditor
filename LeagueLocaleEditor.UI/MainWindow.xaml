@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:LeagueLocalEditor.UI" 
         xmlns:viewmodels="clr-namespace:LeagueLocalEditor.UI.ViewModels"
         xmlns:converters="clr-namespace:LeagueLocalEditor.UI.Converters"
-        xmlns:enums="clr-namespace:LeagueLocalEditor.UI.Enums"
         mc:Ignorable="d"
         Title="Locale Editor" Height="450" Width="800">
     <Window.Resources>

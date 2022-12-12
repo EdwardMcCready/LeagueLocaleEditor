@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
+
 namespace LeagueLocalEditor.UI.ViewModels
 {
     public class MainWindowViewModel
@@ -9,10 +10,10 @@ namespace LeagueLocalEditor.UI.ViewModels
         private System.Windows.Input.ICommand runLeagueCommand;
         public System.Windows.Input.ICommand RunLeagueCommand => runLeagueCommand ?? (runLeagueCommand = new Command(RunLeague));
         
-        public Enums.LocaleNames.Code LocaleCode { get; set; } = Import.ClientSettingsHelper.GetLocalName();
+        public LeagueLocalEditor.Enums.LocaleNames.Code LocaleCode { get; set; } = Import.ClientSettingsSeralization.GetLocaleName(string.Empty);
         
-        public List<Tuple<string, Enums.LocaleNames.Language>> languages;
-        public List<Tuple<string, Enums.LocaleNames.Language>> Languages => languages ?? (languages = Enums.LocaleNames.GetAllDisplayNames());
+        public List<Tuple<string, LeagueLocalEditor.Enums.LocaleNames.Language>> languages;
+        public List<Tuple<string, Enums.LocaleNames.Language>> Languages => languages ?? (languages = LeagueLocalEditor.Enums.LocaleNames.GetAllDisplayNames());
 
         public MainWindowViewModel()
         {
