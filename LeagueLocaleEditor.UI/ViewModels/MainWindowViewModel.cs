@@ -8,18 +8,44 @@ namespace LeagueLocaleEditor.UI.ViewModels
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
+        private string ConfigLocation;
         private System.Windows.Input.ICommand runLeagueCommand;
         public System.Windows.Input.ICommand RunLeagueCommand => runLeagueCommand ?? (runLeagueCommand = new Command(RunLeague));
 
-        public Enums.LocaleNames.Code LocaleCode { get; private set; } = Enums.LocaleNames.Code.invalidCode;
-        
         public List<Tuple<string, Enums.LocaleNames.Language>> languages;
         public List<Tuple<string, Enums.LocaleNames.Language>> Languages => languages ?? (languages = Enums.LocaleNames.GetAllDisplayNames());
 
-        public bool FoundFile { get; private set; } = false;
-     
+        private Enums.LocaleNames.Code localeCode = Enums.LocaleNames.Code.invalidCode;
+        public Enums.LocaleNames.Code LocaleCode
+        {
+            get { return localeCode; }
+            set 
+            {
+                localeCode = value;
+                OnPropertyChanged(nameof(LocaleCode));
+            }
+        }
+
+        private Enums.LocaleNames.Language selectedLanguage = Enums.LocaleNames.Language.invalidCode;
+        public Enums.LocaleNames.Language SelectedLanguage 
+        {
+            get { return selectedLanguage; }
+            set
+            {
+                selectedLanguage = value;
+                OnPropertyChanged(nameof(SelectedLanguage));
+            }
+        } 
+
+        private bool foundFile = false;
+        public bool FoundFile {
+            get { return foundFile; }
+            set
+            {
+                foundFile = value;
+                OnPropertyChanged(nameof(FoundFile));
+            }
+        }
 
         public MainWindowViewModel()
         {
@@ -29,35 +55,34 @@ namespace LeagueLocaleEditor.UI.ViewModels
             FileLocationBackgroundWorker.RunWorkerAsync();
         }
 
-        private void MainWindowViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         private void FileLocationBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            var filePath = Import.ClientSettingsHelpers.GetFileLocation();
-            LocaleCode = Import.ClientSettingsHelpers.GetLocaleName(filePath);
+            ConfigLocation = Import.ClientSettingsHelpers.GetFileLocation();
+            LocaleCode = Import.ClientSettingsHelpers.GetLocaleName(ConfigLocation);
         }
 
         private void FileLocationBackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             // Removes the progress bar
             FoundFile = true;
-            OnPropertyChanged(nameof(FoundFile));
-            OnPropertyChanged(nameof(LocaleCode));
+            SelectedLanguage = (Enums.LocaleNames.Language)LocaleCode;
         }
 
         private void RunLeague()
         {
-
+            string executableLocation = ConfigLocation.Replace("\\Config", string.Empty);
+            executableLocation += "\\LeagueClient.exe";
+            if (System.IO.File.Exists(executableLocation))
+                System.Diagnostics.Process.Start(executableLocation);
         }
 
         #region Property Changed
 
+        public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
         {
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            if(PropertyChanged!= null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion

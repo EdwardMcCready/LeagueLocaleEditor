@@ -67,11 +67,7 @@ namespace LeagueLocaleEditor.Enums
 
         public static string GetDisplayName(Language language)
         {
-            if(language == Language.invalidCode)
-            {
-                return string.Empty;
-            }
-            else if (HasDisplayName(language))
+            if (HasDisplayName(language))
             {
                 var enumType = typeof(Language);
                 var memberInfos = enumType.GetMember(language.ToString());

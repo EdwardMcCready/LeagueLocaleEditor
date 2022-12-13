@@ -14,14 +14,10 @@ namespace LeagueLocaleEditor.UI.Converters
 
             if (languageLocale.ToString() == enumIndex.ToString())
             {
-                return "Invalid Language";
-            }
-            else if(languageLocale.ToString() == Enums.LocaleNames.Code.invalidCode.ToString())
-            {
-                return string.Empty;
+                return Enums.LocaleNames.Language.invalidCode;
             }
 
-            return "Current Language : " + Enums.LocaleNames.GetDisplayName(languageLocale);
+            return Enums.LocaleNames.GetDisplayName(languageLocale);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

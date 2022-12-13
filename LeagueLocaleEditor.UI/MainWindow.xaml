@@ -10,7 +10,8 @@
         Title="Locale Editor" Height="450" Width="800">
     <Window.Resources>
         <converters:CodeToLanguageConverter x:Key="CodeToLanguageConverter"/>
-        <converters:InvertedBoolToCollapsedConverter x:Key="BoolToCollapseConverter"/>
+        <converters:InvertedBoolToCollapsedConverter x:Key="InvertedBoolToCollapseConverter"/>
+        <converters:BoolToCollapsedConverter x:Key="BoolToCollapseConverter"/>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -21,10 +22,17 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="9*"/>
         </Grid.RowDefinitions>
-        <ProgressBar IsIndeterminate="True" Margin="10,10,10,10" Visibility="{Binding FoundFile, Converter={StaticResource BoolToCollapseConverter}}"/>
-        <TextBlock Text="Finding File" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding FoundFile, Converter={StaticResource BoolToCollapseConverter}}"/>
-        <Label Content="{Binding LocaleCode, Converter={StaticResource ResourceKey=CodeToLanguageConverter}}" />
-        <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Languages}" DisplayMemberPath="Item1"/>
-        <!--<Button Command="{Binding RunLeagueCommand}"/>-->
+        <ProgressBar IsIndeterminate="True" Margin="10,10,10,10" 
+                     Visibility="{Binding FoundFile, Converter={StaticResource InvertedBoolToCollapseConverter}}"/>
+        <TextBlock Text="Finding File" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                   Visibility="{Binding FoundFile, Converter={StaticResource InvertedBoolToCollapseConverter}}"/>
+        <Label Content="{Binding LocaleCode, Converter={StaticResource ResourceKey=CodeToLanguageConverter}}" 
+               ContentStringFormat="Current Language: {0}"
+               Visibility="{Binding FoundFile, Converter={StaticResource BoolToCollapseConverter}}"/>
+        <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Languages}" 
+                  DisplayMemberPath="Item1" SelectedValuePath="Item2" SelectedValue="{Binding SelectedLanguage}"
+                  Visibility="{Binding FoundFile, Converter={StaticResource BoolToCollapseConverter}}"/>
+       <!--<Button Command="{Binding RunLeagueCommand}" 
+                Visibility="{Binding FoundFile, Converter={StaticResource BoolToCollapseConverter}}"/>-->
     </Grid>
 </Window>
